@@ -19,8 +19,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun initializeViewModel()
 
-    private fun initializeUiComponent() {
-
-    }
+    abstract fun initializeUiComponent()
 
 }

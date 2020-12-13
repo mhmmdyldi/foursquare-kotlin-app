@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -15,6 +16,7 @@ import com.google.android.gms.location.LocationServices
 import com.mhmmd.baladfoursquare.R
 import com.mhmmd.baladfoursquare.ui.base.BaseActivity
 import com.mhmmd.baladfoursquare.ui.base.ViewModelFactory
+import com.mhmmd.baladfoursquare.ui.nearestLocations.adapter.NearestVenuesListAdapter
 import com.mhmmd.baladfoursquare.ui.nearestLocations.viewModel.ExploredLocationsViewModel
 import com.mhmmd.baladfoursquare.utils.PermissionUtils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,6 +31,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var exploredLocationsViewModel: ExploredLocationsViewModel
+    private lateinit var nearestVenuesListAdapter: NearestVenuesListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +51,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initializeUiComponent() {
+        nearestVenuesRecyclerView.layoutManager = LinearLayoutManager(this)
+        nearestVenuesListAdapter = NearestVenuesListAdapter(arrayListOf())
+        nearestVenuesRecyclerView.adapter = nearestVenuesListAdapter
     }
 
     private fun checkForLocationPermissions() {
@@ -132,7 +138,8 @@ class MainActivity : BaseActivity() {
 
     private fun observeNearestVenues() {
         exploredLocationsViewModel.getObservableNearestVenues().observe(this, Observer {
-
+            nearestVenuesListAdapter.setItems(it)
+            nearestVenuesListAdapter.notifyDataSetChanged()
         })
     }
 }
