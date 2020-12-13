@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BaladFourSquare</string>
+    <string name="default_lat">00.000000</string>
+    <string name="default_lng">00.000000</string>
+    <string name="enable_gps">لطفا GPS را فعال کنید.</string>
+    <string name="required_for_this_app">دسترسی GPS برای استفاده از این برنامه نیاز است.</string>
+    <string name="enable_now">فعال کن</string>
+    <string name="location_permission_not_granted">دسترسی GPS داده نشد.</string>
 </resources>

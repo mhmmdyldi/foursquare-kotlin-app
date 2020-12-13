@@ -5,6 +5,7 @@ import com.mhmmd.baladfoursquare.data.local.prefs.PreferencesHelper
 import com.mhmmd.baladfoursquare.data.model.ExploredVenuesDetails
 import com.mhmmd.baladfoursquare.data.model.VenueDetails
 import com.mhmmd.baladfoursquare.data.remote.ApiHelper
+import com.mhmmd.baladfoursquare.utils.AppConstants
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -15,15 +16,11 @@ import javax.inject.Singleton
 class MainRepositoryImp @Inject constructor(private val mApiHelper: ApiHelper, private val mDbHelper: DbHelper,
                                             private val mPreferencesHelper: PreferencesHelper): MainRepository {
 
-    override fun getNearestVenuesApiCall(
-        clientId: String,
-        clientSecret: String,
-        cordinate: String,
-        category: String,
-        version: Int,
-        limit: Int
-    ): Observable<ExploredVenuesDetails.ExploredVenuesResponse.ExploredVenuesGroups> {
-        return mApiHelper.exploreVenuesApiCall(clientId, clientSecret, cordinate, category, version, limit)
+    override fun getNearestVenuesApiCall(category: String, version: Int, limit: Int):
+            Observable<ExploredVenuesDetails.ExploredVenuesResponse.ExploredVenuesGroups> {
+        return mApiHelper.exploreVenuesApiCall(
+            AppConstants.CLIENT_ID,
+            AppConstants.CLIENT_SECRET, getCurrentLocationsLatitudeFromPrefs().toBigDecimal().toPlainString() + "," + getCurrentLocationsLongitudeFromPrefs().toBigDecimal().toPlainString(), category, version, limit)
             .map { response -> response.exploredVenuesResponse?.groups?.get(0) }
     }
 
