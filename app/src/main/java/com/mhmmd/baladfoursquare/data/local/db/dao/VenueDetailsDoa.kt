@@ -21,4 +21,7 @@ interface VenueDetailsDoa {
 
     @Update
     fun update(vararg venue: VenueDetails)
+
+    @Query("DELETE FROM ${VenueDetails.TABLE_NAME}")
+    fun deleteAll(): Completable
 }

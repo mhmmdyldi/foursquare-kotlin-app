@@ -18,4 +18,8 @@ class DbHelperImp @Inject constructor(val appDatabase: AppDatabase) : DbHelper {
     override fun loadVenuesListFromDb(): Single<List<VenueDetails>> {
         return appDatabase.venueDetailsDao().loadAll()
     }
+
+    override fun deleteVenuesFromDb(): Completable {
+        return appDatabase.venueDetailsDao().deleteAll()
+    }
 }

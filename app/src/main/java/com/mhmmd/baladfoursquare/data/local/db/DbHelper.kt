@@ -8,4 +8,5 @@ interface DbHelper {
     fun saveVenueInDb(venue: VenueDetails) : Completable
     fun saveVenueListInDb(venueList: List<VenueDetails>) : Completable
     fun loadVenuesListFromDb() : Single<List<VenueDetails>>
+    fun deleteVenuesFromDb() : Completable
 }

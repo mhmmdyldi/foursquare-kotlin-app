@@ -5,6 +5,8 @@ import android.content.Context
 import com.mhmmd.baladfoursquare.data.local.db.AppDatabase
 import com.mhmmd.baladfoursquare.data.local.db.DbHelper
 import com.mhmmd.baladfoursquare.data.local.db.DbHelperImp
+import com.mhmmd.baladfoursquare.data.local.prefs.PreferencesHelper
+import com.mhmmd.baladfoursquare.data.local.prefs.PreferencesHelperImp
 import com.mhmmd.baladfoursquare.data.remote.ApiHelper
 import com.mhmmd.baladfoursquare.data.remote.ApiHelperImp
 import com.mhmmd.baladfoursquare.data.remote.ApiService
@@ -67,6 +69,12 @@ class AppModule {
     @Singleton
     fun provideDbHelper(appDbHelper: DbHelperImp): DbHelper {
         return appDbHelper
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferenceHelper(appPreference: PreferencesHelperImp): PreferencesHelper {
+        return appPreference
     }
 
 }

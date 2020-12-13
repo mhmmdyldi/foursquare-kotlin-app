@@ -1,6 +1,7 @@
 package com.mhmmd.baladfoursquare.data.repository
 
 import com.mhmmd.baladfoursquare.data.local.db.DbHelper
+import com.mhmmd.baladfoursquare.data.local.prefs.PreferencesHelper
 import com.mhmmd.baladfoursquare.data.model.ExploredVenuesDetails
 import com.mhmmd.baladfoursquare.data.model.VenueDetails
 import com.mhmmd.baladfoursquare.data.remote.ApiHelper
@@ -11,7 +12,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MainRepositoryImp @Inject constructor(private val mApiHelper: ApiHelper, private val mDbHelper: DbHelper): MainRepository {
+class MainRepositoryImp @Inject constructor(private val mApiHelper: ApiHelper, private val mDbHelper: DbHelper,
+                                            private val mPreferencesHelper: PreferencesHelper): MainRepository {
 
     override fun getNearestVenuesApiCall(
         clientId: String,
@@ -43,5 +45,25 @@ class MainRepositoryImp @Inject constructor(private val mApiHelper: ApiHelper, p
 
     override fun loadVenuesListFromDb(): Single<List<VenueDetails>> {
         return mDbHelper.loadVenuesListFromDb()
+    }
+
+    override fun deleteVenuesFromDb(): Completable {
+        return mDbHelper.deleteVenuesFromDb()
+    }
+
+    override fun setCurrentLocationsLongitudeInPrefs(currentLongitude: Double) {
+        mPreferencesHelper.setCurrentLocationsLongitudeInPrefs(currentLongitude)
+    }
+
+    override fun getCurrentLocationsLongitudeFromPrefs(): Double {
+        return mPreferencesHelper.getCurrentLocationsLongitudeFromPrefs()
+    }
+
+    override fun setCurrentLocationsLatitudeInPrefs(currentLatitude: Double) {
+        mPreferencesHelper.setCurrentLocationsLatitudeInPrefs(currentLatitude)
+    }
+
+    override fun getCurrentLocationsLatitudeFromPrefs(): Double {
+        return mPreferencesHelper.getCurrentLocationsLatitudeFromPrefs()
     }
 }
